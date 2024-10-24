@@ -1,0 +1,27 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  description: MyText
+  is_primary: false
+  estimates_visible: false
+  estimates_enabled: false
+  invoice_visible: false
+  invoice_enabled: false
+  payments_visible: false
+  payments_enabled: false
+  settings_visible: false
+  settings_enabled: false
+
+two:
+  name: MyString
+  description: MyText
+  is_primary: false
+  estimates_visible: false
+  estimates_enabled: false
+  invoice_visible: false
+  invoice_enabled: false
+  payments_visible: false
+  payments_enabled: false
+  settings_visible: false
+  settings_enabled: false
