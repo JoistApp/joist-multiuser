@@ -36,12 +36,10 @@ Rails.application.routes.draw do
       scope "/:user_id" do
         # /api/v1/{user_id}/companies/{company_id}/...
         resources :companies, only: [] do
-          resource :role, controller: "api/v1/roles", only: [:index, :create, :update, :destroy] do
-            get :index, on: :collection
-          end
+          resources :roles, controller: "api/v1/roles", only: [:index, :create, :update, :destroy]
           resources :estimates, controller: "api/v1/estimates", only: %i[index create update destroy]
-          # resources :invoices, controller: "api/v1/invoices", only: %i[index create update destroy]
-          # resources :settings, controller: "api/v1/settings", only: %i[show update]
+          resources :invoices, controller: "api/v1/invoices", only: %i[index create update destroy]
+          resources :settings, controller: "api/v1/settings", only: %i[index update]
         end
       end
     end

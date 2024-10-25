@@ -51,4 +51,8 @@ class Api::ApiController < Api::AuthenticatedController
   def company_id
     params.require(:company_id)
   end
+
+  def user
+    @user ||= User.find(user_id)
+  end
 end

@@ -5,6 +5,7 @@ module Api
     class UserLinksController < ApiController
       def index
 
+
       end
     end
   end

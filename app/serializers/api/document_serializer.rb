@@ -1,8 +1,7 @@
 # frozen_string_literal: true
 
 module Api
-  class EstimateSerializer < DocumentSerializer
-    type "estimate"
+  class DocumentSerializer < BaseSerializer
     attributes :id, :name, :email, :phone, :user_id
     attributes :created_by
 

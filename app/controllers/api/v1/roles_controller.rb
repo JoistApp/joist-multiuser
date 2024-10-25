@@ -12,27 +12,34 @@ module Api
       end
 
       def create
-        user = User.find(user_id)
-        render status: :forbidden unless user.role.roles_enabled
-
-        role = Role.new(company_id: company_id, is_primary: false, **role_params)
-        if role.save
-          render json: {role: role}, status: :created
+        if user.role.roles_enabled
+          role = Role.new(company_id: company_id, is_primary: false, **role_params)
+          if role.save
+            render json: {role: role}, status: :created
+          else
+            render json: role.errors, status: :unprocessable_entity
+          end
         else
-          render json: role.errors, status: :unprocessable_entity
+          render json: {error: "Permission to create a role denied"}, status: :forbidden
         end
       end
 
       # PATCH/PUT /roles/1
       def update
-        if @role.update(role_params)
-          render json: @role
+        if user.role.roles_enabled && !@role.is_primary
+          if @role.update(**role_params)
+            render json: @role
+          else
+            render json: @role.errors, status: :unprocessable_entity
+          end
         else
-          render json: @role.errors, status: :unprocessable_entity
+          render json: {error: "Permission to update a role denied"}, status: :forbidden
         end
       end
 
       def destroy
+        render status: :forbidden if @role.is_primary || !user.role.roles_enabled
+
         @role.destroy
       end
 
