@@ -282,16 +282,16 @@ Devise.setup do |config|
   #   manager.default_strategies(scope: :user).unshift :some_external_strategy
   # end
 
-  config.warden do |manager|
-    #   manager.intercept_401 = false
-    #   manager.default_strategies(scope: :user).unshift :some_external_strategy
-    manager.strategies.add(:joist_header_token_strategy, Devise::Strategies::JoistHeaderTokenStrategy)
-    manager.strategies.add(:joist_token_strategy, Devise::Strategies::JoistTokenStrategy)
-    manager.strategies.add(:sso_token_strategy, Devise::Strategies::SsoTokenStrategy)
-    manager.default_strategies(scope: :user).unshift :joist_header_token_strategy
-    manager.default_strategies(scope: :user).unshift :joist_token_strategy
-    manager.failure_app = Devise::FailureApp
-  end
+  # config.warden do |manager|
+  #   #   manager.intercept_401 = false
+  #   #   manager.default_strategies(scope: :user).unshift :some_external_strategy
+  #   manager.strategies.add(:joist_header_token_strategy, Devise::Strategies::JoistHeaderTokenStrategy)
+  #   manager.strategies.add(:joist_token_strategy, Devise::Strategies::JoistTokenStrategy)
+  #   manager.strategies.add(:sso_token_strategy, Devise::Strategies::SsoTokenStrategy)
+  #   manager.default_strategies(scope: :user).unshift :joist_header_token_strategy
+  #   manager.default_strategies(scope: :user).unshift :joist_token_strategy
+  #   manager.failure_app = Devise::FailureApp
+  # end
 
   # ==> Mountable engine configurations
   # When using Devise inside an engine, let's call it `MyEngine`, and this engine

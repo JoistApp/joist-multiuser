@@ -34,6 +34,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_10_04_144530) do
     t.string "name"
     t.string "email"
     t.string "phone"
+    t.integer "company_id", null: false
     t.integer "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -43,6 +44,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_10_04_144530) do
     t.string "name"
     t.string "email"
     t.string "phone"
+    t.integer "company_id", null: false
     t.integer "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -52,14 +54,14 @@ ActiveRecord::Schema[7.0].define(version: 2024_10_04_144530) do
     t.string "name"
     t.text "description"
     t.boolean "is_primary", default: false
-    t.boolean "roles_visible", null: false
-    t.boolean "roles_enabled", null: false
-    t.boolean "estimates_visible", null: false
-    t.boolean "estimates_enabled", null: false
-    t.boolean "invoice_visible", null: false
-    t.boolean "invoice_enabled", null: false
-    t.boolean "settings_visible", null: false
-    t.boolean "settings_enabled", null: false
+    t.boolean "roles_visible", default: false
+    t.boolean "roles_enabled", default: false
+    t.boolean "users_visible", default: false
+    t.boolean "users_enabled", default: false
+    t.boolean "estimates_enabled", default: false
+    t.boolean "invoices_enabled", default: false
+    t.boolean "settings_visible", default: false
+    t.boolean "settings_enabled", default: false
     t.integer "company_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

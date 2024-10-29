@@ -3,11 +3,10 @@
 module Api
   module V1
     class SettingsController < ApiController
-      def index
-        render json: {settings: Api::SettingsSerializer.new(user)}
+      def show
+        render json: {settings: Api::SettingsSerializer.new(user, user_id:, company_id:)}
       end
 
-      # PATCH/PUT /roles/1
       def update
         user.update(**user_settings_params) && user.company.update(**company_settings_params)
         render json:{settings: Api::SettingsSerializer.new(user)}

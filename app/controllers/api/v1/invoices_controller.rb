@@ -4,17 +4,17 @@ module Api
   module V1
     class InvoicesController < ApiController
       def index
-        company = user.company
-        user_ids = company.users.pluck(:id)
-        company_invoices = Invoice.where("user_id IN (?)", user_ids)
-        render json: company_invoices, each_serializer: Api::InvoiceSerializer
+        company_invoices = Invoice.where(company_id: company_id)
+        invoices = ActiveModel::Serializer::CollectionSerializer.new(company_invoices, serializer: Api::InvoiceSerializer, user_id:).as_json
+        render json: {data: {invoices: invoices,
+                             links: LinkHelper.get_links(user, "invoice")}}
       end
 
       def create
-        if user.role.invoice_enabled
-          invoice = Invoice.new(user_id: user_id, **invoice_params)
+        if user.role.invoices_enabled
+          invoice = Invoice.new(user_id: user_id, company_id: company_id, **invoice_params)
           if invoice.save
-            render json: {invoice: Api::InvoiceSerializer.new(invoice)}, status: :created
+            render json: {invoice: Api::InvoiceSerializer.new(invoice, user_id:)}, status: :created
           else
             render json: invoice.errors, status: :unprocessable_entity
           end
@@ -24,7 +24,7 @@ module Api
       end
 
       def update
-        if user.role.invoice_enabled
+        if user.role.invoices_enabled
           invoice = Invoice.find(invoice_id)
           if invoice.update(invoice_params)
             render json: {invoice: Api::InvoiceSerializer.new(invoice)}
@@ -33,6 +33,21 @@ module Api
           end
         else
           render json: {error: "Permission to update an invoice denied"}, status: :forbidden
+        end
+      end
+
+
+
+      def destroy
+        if user.role.invoices_enabled
+          invoice = Invoice.find(invoice_id)
+          if invoice.destroy
+            render json: {message: "Invoice deleted"}
+          else
+            render json: invoice.errors, status: :unprocessable_entity
+          end
+        else
+          render json: {error: "Permission to delete an invoice denied"}, status: :forbidden
         end
       end
 

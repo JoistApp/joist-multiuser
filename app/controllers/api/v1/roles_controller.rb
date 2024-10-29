@@ -8,7 +8,10 @@ module Api
       def index
         global_roles = Role.where(company_id: nil)
         company_roles = Role.where(company_id: company_id)
-        render json: {roles: global_roles + company_roles}
+        all_roles = global_roles + company_roles
+        roles = ActiveModel::Serializer::CollectionSerializer.new(all_roles, serializer: Api::RoleSerializer, user_id:, company_id:).as_json
+        render json: {data: {roles: roles,
+                             links: LinkHelper.get_links(user, "role")}}
       end
 
       def create
@@ -38,7 +41,7 @@ module Api
       end
 
       def destroy
-        render status: :forbidden if @role.is_primary || !user.role.roles_enabled
+        render json: {error: "Permission to delete a role denied"}, status: :forbidden if @role.is_primary || !user.role.roles_enabled
 
         @role.destroy
       end
@@ -46,15 +49,15 @@ module Api
       private
 
       def set_role
-        @role = Role.find(params[:id])
+        @role ||= Role.find(params[:id])
       end
 
       def role_params
         params.require(:role).permit(
           :name, :description,
           :roles_visible, :roles_enabled,
-          :estimates_visible, :estimates_enabled,
-          :invoice_visible, :invoice_enabled,
+          :users_visible, :users_enabled,
+          :estimates_enabled, :invoices_enabled,
           :settings_visible, :settings_enabled)
       end
     end

@@ -9,15 +9,15 @@
 # Seed the roles table
 Role.seed(:id, :name) do |s|
   s.id = 1
-  s.name = "admin"
-  s.description = "Admin"
+  s.name = "Company Owner"
+  s.description = "Company Owner"
   s.is_primary = true
   s.roles_visible = true
   s.roles_enabled = true
-  s.estimates_visible = true
+  s.users_visible = true
+  s.users_enabled = true
   s.estimates_enabled = true
-  s.invoice_visible = true
-  s.invoice_enabled = true
+  s.invoices_enabled = true
   s.settings_visible = true
   s.settings_enabled = true
 end
