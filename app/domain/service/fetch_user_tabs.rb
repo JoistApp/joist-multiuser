@@ -27,6 +27,8 @@ module Service
       end
 
       if user_links.any?
+        get_roles_link = role_links.find { |l| l[:rel] == "self" }
+        user_links << get_roles_link if get_roles_link
         @tabs << {
           id: 2,
           index: index,
