@@ -7,9 +7,9 @@ Rails.application.routes.draw do
   devise_for :users, skip: %i[sessions registrations passwords confirmations]
   # as is an alias for devise_scope
   as :user do
-    post "api/sign_up", to: "users/registrations#create", as: :user_registration
-    get "api/sign_in", to: "users/sessions#new", as: :new_user_registration_path # redirects to web app
-    post "api/sign_in", to: "users/sessions#create", as: :user_session
+    post "api/v1/sign_up", to: "users/registrations#create", as: :user_registration
+    get "api/v1/sign_in", to: "users/sessions#new", as: :new_user_registration_path # redirects to web app
+    post "api/v1/sign_in", to: "users/sessions#create", as: :user_session
     # We don't skip and name this route because we use the Devise web component of password resetting
     get "users/password/new", to: "users/passwords#new", as: :new_user_password
     get "users/password/success", to: "users/passwords#reset_success", as: :reset_password_success
@@ -18,7 +18,7 @@ Rails.application.routes.draw do
     put "users/password", to: "users/passwords#update"
 
     post "api/password", to: "users/passwords#create"
-    match "api/sign_out", to: "users/sessions#destroy", as: :destroy_user_session, via: %i[get delete]
+    match "api/v1/sign_out", to: "users/sessions#destroy", as: :destroy_user_session, via: %i[get delete]
     match "api/:user_id/sign_out", to: "users/sessions#destroy", as: :destroy_user_session_with_user_id, via: %i[get delete]
 
     get "users/confirmation/new", to: "users/confirmations#new", as: :new_user_confirmation
