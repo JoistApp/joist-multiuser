@@ -4,7 +4,7 @@ require "./lib/middleware/disable_cookie_session"
 require "./lib/middleware/etag"
 
 Rails.application.config.middleware.insert_before 0, Rack::Cors do
-  CORS_ORIGINS = ENV.fetch("CORS_ORIGINS", "localhost:3000,localhost:4000")
+  CORS_ORIGINS = ENV.fetch("CORS_ORIGINS", "localhost:3000,localhost:4000,localhost:5173")
   allow do
     origins CORS_ORIGINS.split(",").map(&:strip)
 
@@ -12,6 +12,7 @@ Rails.application.config.middleware.insert_before 0, Rack::Cors do
              headers: :any,
              expose: %w[Link],
              methods: %i[get post delete put options head],
+             credentials: true,
              max_age: 1_728_000
   end
 end
