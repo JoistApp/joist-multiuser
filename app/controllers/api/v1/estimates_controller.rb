@@ -14,7 +14,7 @@ module Api
         if user.role.estimates_enabled
           estimate = Estimate.new(user_id: user_id, company_id: company_id, **estimate_params)
           if estimate.save
-            render json: {estimate: Api::EstimateSerializer.new(estimate)}, status: :created
+            render json: {estimate: Api::EstimateSerializer.new(estimate, user_id:)}, status: :created
           else
             render json: estimate.errors, status: :unprocessable_entity
           end
@@ -27,7 +27,7 @@ module Api
         if user.role.estimates_enabled
           estimate = Estimate.find(estimate_id)
           if estimate.update(estimate_params)
-            render json: {estimate: Api::EstimateSerializer.new(estimate)}
+            render json: {estimate: Api::EstimateSerializer.new(estimate, user_id:)}
           else
             render json: estimate.errors, status: :unprocessable_entity
           end

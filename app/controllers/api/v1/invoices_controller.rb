@@ -27,7 +27,7 @@ module Api
         if user.role.invoices_enabled
           invoice = Invoice.find(invoice_id)
           if invoice.update(invoice_params)
-            render json: {invoice: Api::InvoiceSerializer.new(invoice)}
+            render json: {invoice: Api::InvoiceSerializer.new(invoice, user_id:)}
           else
             render json: invoice.errors, status: :unprocessable_entity
           end
