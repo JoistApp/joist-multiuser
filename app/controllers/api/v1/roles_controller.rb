@@ -31,7 +31,7 @@ module Api
       def update
         if user.role.roles_enabled && !@role.is_primary
           if @role.update(**role_params)
-            render json: @role
+            render json: {role: Api::InvoiceSerializer.new(@role, user_id:)}
           else
             render json: @role.errors, status: :unprocessable_entity
           end

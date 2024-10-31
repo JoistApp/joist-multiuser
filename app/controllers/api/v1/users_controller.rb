@@ -16,9 +16,9 @@ module Api
       end
 
       def update
-        if user.role.users_enabled && target_user_id.present? && @target_user.company_id == company_id
-          if target_user_id.update(**user_params)
-            render json: Api::UserSerializer.new(@target_user), status: :ok
+        if user.role.users_enabled && target_user_id.present? && @target_user.company_id == company_id.to_i
+          if @target_user.update(**user_params)
+            render json: {invoice: Api::UserSerializer.new(@target_user, user_id:)}
           else
             render json: @target_user.errors, status: :unprocessable_entity
           end
