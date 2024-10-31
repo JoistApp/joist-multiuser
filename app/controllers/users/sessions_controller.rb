@@ -11,11 +11,11 @@ class Users::SessionsController < Devise::SessionsController
 
   # GET /resource/sign_in
   def new
-    # super
-    respond_to do |format|
-      format.html { redirect_to "https:://www.google.ca", allow_other_host: true, status: :moved_permanently }
-      format.any { head 404, "content_type" => "text/plain" }
-    end
+    super
+    # respond_to do |format|
+    #   format.html { redirect_to "https:://www.google.ca", allow_other_host: true, status: :moved_permanently }
+    #   format.any { head 404, "content_type" => "text/plain" }
+    # end
   end
 
   # POST /resource/sign_in
